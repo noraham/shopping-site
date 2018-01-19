@@ -76,14 +76,13 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
+    cart_lst = []
+    order_total = 0.00
+
     try:
         cart_dict = session["cart"]
     except KeyError:
-        cart_lst = []
-        order_total = 0.00
         return render_template("cart.html", cart=cart_lst, total=order_total)
-    cart_lst = []
-    order_total = 0.00
 
     for melon_id in cart_dict:
         melon_obj = melons.get_by_id(melon_id)
