@@ -6,6 +6,9 @@ put melons in a shopping cart.
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
+## Review further study to add Customer class & login page:
+## http://fellowship.hackbrightacademy.com/materials/f20a/exercises/shopping-site/further-study.html
+
 from flask import Flask, render_template, redirect, flash, session
 import jinja2
 
