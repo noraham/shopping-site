@@ -76,7 +76,23 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
 
-    return render_template("cart.html")
+    try:
+        cart_dict = session["cart"]
+    except KeyError:
+        cart_lst = []
+        order_total = 0.00
+        return render_template("cart.html", cart=cart_lst, total=order_total)
+    cart_lst = []
+    order_total = 0.00
+
+    for melon_id in cart_dict:
+        melon_obj = melons.get_by_id(melon_id)
+        melon_obj.qty = cart_dict[melon_id]
+        melon_obj.total = (melon_obj.qty) * (melon_obj.price)
+        cart_lst.append(melon_obj)
+        order_total += melon_obj.total
+
+    return render_template("cart.html", cart=cart_lst, total=order_total)
 
 
 @app.route("/add_to_cart/<melon_id>")
@@ -105,7 +121,6 @@ def add_to_cart(melon_id):
             session["cart"][melon_id] += 1
         else:
             session["cart"][melon_id] = 1
-
 
     print session["cart"]  # keeping this for debugging
 
